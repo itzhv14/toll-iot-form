@@ -1,0 +1,18 @@
+<br>
+<% include ./partials/messages %>
+<h1 class="mt-4">Dashboard</h1>
+<p class="lead mb-3">Welcome <%= user.name %></p>
+<p class="lead mb-3">Your Name: <%= user.name %></p>
+<p class="lead mb-3">Your Email: <%= user.email %></p>
+<p class="lead mb-3">Your Vehicle No: <%= user.vno %></p>
+<p class="lead mb-3">Your Tag ID: <%= user.tagid %></p>
+<p class="lead mb-3">Your toll amount: <%= user.ctype %></p>
+<p class="lead mb-3">Your Balance: <%= user.balance %></p>
+
+<form action='users/inc' method='POST'>
+<button class="btn btn-secondary">Insert Rs. 100</button>
+
+
+<a href="/users/logout" class="btn btn-secondary">Logout</a>
+
+</form>
