@@ -3,7 +3,7 @@
 This is a user login and registration app for IOT project.
 
 
-### Ye kar
+### Steps:
 
 ```sh
 $ npm install
@@ -11,7 +11,7 @@ $ npm install
 
 ```sh
 $ npm start
-# with Nodemon
+# (starts with nodemon)
 
 # Visit http://localhost:5000
 ```
