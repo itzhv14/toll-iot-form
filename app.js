@@ -11,16 +11,15 @@ app.use(cors());
 require('./config/passport')(passport);
 
 // DB Config
-// const db = require('./config/keys').mongoURI;
-mongoose.connect("mongodb+srv://bapxyz:iotform123@iotform.pqwgi.mongodb.net/iotform?retryWrites=true&w=majority", { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true });
-// Connect to MongoDB
-// mongoose
-//   .connect(
-//     db,
-//     { useNewUrlParser: true ,useUnifiedTopology: true}
-//   )
-//   .then(() => console.log('MongoDB Connected'))
-//   .catch(err => console.log(err));
+const db = require('./config/keys').mongoURI;
+Connect to MongoDB
+mongoose
+  .connect(
+    db,
+    { useNewUrlParser: true ,useUnifiedTopology: true}
+  )
+  .then(() => console.log('MongoDB Connected'))
+  .catch(err => console.log(err));
 
 // EJS
 app.use(expressLayouts);
