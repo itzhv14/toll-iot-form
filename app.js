@@ -4,15 +4,15 @@ const mongoose = require('mongoose');
 const passport = require('passport');
 const flash = require('connect-flash');
 const session = require('express-session');
-
+const cors = require('cors');
 const app = express();
-
+app.use(cors());
 // Passport Config
 require('./config/passport')(passport);
 
 // DB Config
 // const db = require('./config/keys').mongoURI;
-mongoose.connect("mongodb://localhost:27017/iotform", { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true });
+mongoose.connect("mongodb+srv://bapxyz:iotform123@iotform.pqwgi.mongodb.net/iotform?retryWrites=true&w=majority", { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true });
 // Connect to MongoDB
 // mongoose
 //   .connect(
