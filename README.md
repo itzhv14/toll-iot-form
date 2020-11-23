@@ -1,4 +1,4 @@
-# IOT Login
+# Automated Toll Booth System: An IOT Mini Project
 
 This is a user login and registration app for IOT project.
 
@@ -7,6 +7,11 @@ This is a user login and registration app for IOT project.
 
 ```sh
 $ npm install
+```
+
+```sh
+
+Setup Config->keys.js->MongoDB Connection Setup
 ```
 
 ```sh
