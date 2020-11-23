@@ -1,6 +1,6 @@
 # Automated Toll Booth System: An IOT Mini Project
 
-This is a user login and registration app for IOT project.
+This is a user login and registration site for Automated Toll Booth System along with APIs.
 
 
 ### Steps:
