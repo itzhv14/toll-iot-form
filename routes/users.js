@@ -10,7 +10,7 @@ const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user: 'iotformtest@gmail.com',
-    pass: 'iotform123'
+    pass: 'PASSWORD'
   }
 });
 
