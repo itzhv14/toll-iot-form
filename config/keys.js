@@ -1,4 +1,4 @@
-dbPassword = 'mongodb+srv://YOUR_USERNAME_HERE:'+ encodeURIComponent('YOUR_PASSWORD_HERE') + '@CLUSTER_NAME_HERE.mongodb.net/test?retryWrites=true';
+dbPassword = 'mongodb+srv://bapxyz:iotform123@iotform.pqwgi.mongodb.net/iotform?retryWrites=true&w=majority';
 // mongoose.connect("mongodb://localhost:27017/iotform", { useUnifiedTopology: true, useNewUrlParser: true, useCreateIndex: true });
 module.exports = {
     mongoURI: dbPassword
