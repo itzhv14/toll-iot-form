@@ -4,13 +4,24 @@ const bcrypt = require('bcryptjs');
 const passport = require('passport');
 // Load User model
 const User = require('../models/User');
+const Transaction = require('../models/Transaction');
+
+
 const { forwardAuthenticated } = require('../config/auth');
 const nodemailer = require('nodemailer');
+
+
+const vehicleType = {
+  40: 'Car',
+  50: 'Jeep',
+  100: 'Bus',
+  200: 'Truck'
+}
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
     user: 'iotformtest@gmail.com',
-    pass: 'PASSWORD'
+    pass: 'iotform123'
   }
 });
 
@@ -165,8 +176,85 @@ router.route('/records').get(function(req,res){
 
 
 //Check records and verify balance
-router.route('/records/:id').get(function(req,res){
+router.route('/records/:id').get(async (req,res)=>{
   User.findOne({tagid : req.params.id}, (err,record)=>{
+      if(err){
+          console.log(err);
+      }
+      else{
+          if(!record){
+            res.json("record not found");
+          }else{
+          //Check for balance and send appropriate response
+            if(record.balance< record.ctype){
+              let newUserMail = {...paymentFailure};                
+                newUserMail.to = record.email;
+                newUserMail.text = `Your toll payment for vehicle number + ${record.vno} + has been unsuccessfull due to insufficient balance`;
+                transporter.sendMail(newUserMail, function(error, info){
+                  if (error) {
+                    console.log(error);
+                  } else {
+                    console.log('Email sent: ' + info.response);
+                  }
+                });
+              let transaction = {                  
+                  name: record.name,
+                  vno : record.vno,
+                  vtype: vehicleType[record.ctype],
+                  success: false
+                }
+                let transactionResult = new Transaction(transaction);
+                transactionResult.save().then(transactionResult=>{
+                  console.log("Transaction saved");
+                });              
+              res.json({
+                success: false,
+                message: `Your toll payment for vehicle number ${record.vno} has failed due to insufficient balance`
+              })
+            }else{
+              record.balance = record.balance-record.ctype;
+              record.save().then(record=>{
+                let newUserMail = {...paymentSuccess};                
+                newUserMail.to = record.email;
+                newUserMail.text = `Your toll payment for vehicle number ${record.vno} has been successfull.Your current balance is now ${record.balance}`;
+                transporter.sendMail(newUserMail, function(error, info){
+                  if (error) {
+                    console.log(error);
+                  } else {
+                    console.log('Email sent: ' + info.response);
+                  }
+                });
+
+                let transaction = {                  
+                  name: record.name,
+                  vno : record.vno,
+                  vtype: vehicleType[record.ctype],
+                  success: true
+                }
+                let transactionResult = new Transaction(transaction);
+                transactionResult.save().then(transactionResult=>{
+                  console.log("Transaction saved");
+                });
+                console.log(transaction);
+                res.json({
+                  success: true,
+                  message: `Your toll payment for vehicle number ${record.vno} is successfull.Your current balance is ${record.balance}`
+                });
+              }).catch(err=>{
+                console.log(err);
+              })
+            }
+
+          }
+      }
+  });    
+});
+
+
+
+//Check records and verify balance
+router.route('/check/:id').get(function(req,res){
+  User.findOne({vno : req.params.id}, (err,record)=>{
       if(err){
           console.log(err);
       }
@@ -221,7 +309,6 @@ router.route('/records/:id').get(function(req,res){
       }
   });    
 });
-
 // Logout
 router.get('/logout', (req, res) => {
   req.logout();
