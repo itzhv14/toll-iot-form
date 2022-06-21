@@ -1,4 +1,4 @@
-### Hosted at-  https://iot-toll-payment.herokuapp.com/
+### Hosted at- https://iot-toll-app.herokuapp.com/
 
 # Automated Toll Booth System: An IOT Mini Project
 
